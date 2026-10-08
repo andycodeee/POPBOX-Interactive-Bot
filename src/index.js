@@ -310,6 +310,19 @@ client.on(Events.InteractionCreate, async interaction => {
         });
       }
 
+      if (interaction.customId === "ticket:close") {
+        const ticket = db.prepare("SELECT * FROM tickets WHERE channel_id=?").get(interaction.channel.id);
+        if (!ticket) return interaction.reply({ content:"Ticket record not found.", ephemeral:true });
+        db.prepare("UPDATE tickets SET closed_at=? WHERE channel_id=?").run(new Date().toISOString(), interaction.channel.id);
+        await sendLog(interaction.guild, "tickets", "🎫 Ticket Closed", [
+          {name:"Channel",value:interaction.channel.toString()},
+          {name:"Owner",value:`<@${ticket.owner_id}>`},
+          {name:"Closed by",value:interaction.user.toString()}
+        ]);
+        await interaction.reply("🔒 Closing ticket...");
+        return setTimeout(()=>interaction.channel.delete().catch(()=>{}), 1500);
+      }
+
       if (interaction.customId.startsWith("ticket:")) {
         const type = interaction.customId.split(":")[1];
         const cfg = { ...DEFAULT_CONFIG, ...getConfig(interaction.guild.id) };
@@ -329,19 +342,6 @@ client.on(Events.InteractionCreate, async interaction => {
         db.prepare("INSERT INTO tickets VALUES (?,?,?,?,?,NULL)").run(channel.id, interaction.guild.id, interaction.user.id, type, new Date().toISOString());
         await channel.send({ content:`<@${interaction.user.id}>`, embeds:[embed(type === "report" ? "🚨 User Report" : "🎫 General Support", "Please describe your issue. You can upload screenshots/videos/evidence here.")], components:[new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId("ticket:close").setLabel("Close Ticket").setStyle(ButtonStyle.Danger))]});
         return interaction.reply({ content:`Ticket created: ${channel}`, ephemeral:true });
-      }
-
-      if (interaction.customId === "ticket:close") {
-        const ticket = db.prepare("SELECT * FROM tickets WHERE channel_id=?").get(interaction.channel.id);
-        if (!ticket) return interaction.reply({ content:"Ticket record not found.", ephemeral:true });
-        db.prepare("UPDATE tickets SET closed_at=? WHERE channel_id=?").run(new Date().toISOString(), interaction.channel.id);
-        await sendLog(interaction.guild, "tickets", "🎫 Ticket Closed", [
-          {name:"Channel",value:interaction.channel.toString()},
-          {name:"Owner",value:`<@${ticket.owner_id}>`},
-          {name:"Closed by",value:interaction.user.toString()}
-        ]);
-        await interaction.reply("🔒 Closing ticket...");
-        return setTimeout(()=>interaction.channel.delete().catch(()=>{}), 1500);
       }
 
       if (interaction.customId === "application:start") {
