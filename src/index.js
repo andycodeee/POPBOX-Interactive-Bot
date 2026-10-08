@@ -106,6 +106,9 @@ async function recreateMissingGuildSetup(guild, cfg = DEFAULT_CONFIG) {
 }
 
 async function scanGuildIntegrity(guild) {
+  await guild.roles.fetch().catch(() => {});
+  await guild.channels.fetch().catch(() => {});
+
   const cfg = { ...DEFAULT_CONFIG, ...getConfig(guild.id) };
   const missing = getMissingGuildSetup(guild, cfg);
   if (!missing.length) return;
@@ -441,12 +444,39 @@ client.on(Events.MessageUpdate, async (oldMessage,newMessage) => {
 });
 
 client.on(Events.ChannelCreate, async channel => {
-  if (channel.guild) await sendLog(channel.guild,"server","📁 Channel Created",[{name:"Channel",value:`${channel.name} (${channel.id})`}]);
+  if (!channel.guild) return;
+
+  const cfg = { ...DEFAULT_CONFIG, ...getConfig(channel.guild.id) };
+  const next = { ...cfg };
+
+  if (channel.type === ChannelType.GuildCategory && channel.name === "POPBOX Tickets") next.ticketCategoryId = channel.id;
+  if (channel.type === ChannelType.GuildText && channel.name === "mod-logs") next.logChannelId = channel.id;
+  if (channel.type === ChannelType.GuildText && channel.name === "welcome") next.welcomeChannelId = channel.id;
+  if (channel.type === ChannelType.GuildText && channel.name === "verify") next.verificationChannelId = channel.id;
+  if (channel.type === ChannelType.GuildText && channel.name === "tickets") next.ticketPanelChannelId = channel.id;
+  if (channel.type === ChannelType.GuildText && channel.name === "applications") next.applicationChannelId = channel.id;
+
+  if (JSON.stringify(cfg) !== JSON.stringify(next)) {
+    setConfig(channel.guild.id, next);
+  }
+
+  await sendLog(channel.guild,"server","📁 Channel Created",[{name:"Channel",value:`${channel.name} (${channel.id})`}]);
 });
 client.on(Events.ChannelDelete, async channel => {
   if (channel.guild) await sendLog(channel.guild,"server","🗑️ Channel Deleted",[{name:"Channel",value:`${channel.name} (${channel.id})`}]);
 });
 client.on(Events.RoleCreate, async role => {
+  const cfg = { ...DEFAULT_CONFIG, ...getConfig(role.guild.id) };
+  const next = { ...cfg };
+
+  if (role.name === "Verified") next.verifiedRoleId = role.id;
+  if (role.name === "Unverified") next.unverifiedRoleId = role.id;
+  if (role.name === "Members") next.memberRoleId = role.id;
+
+  if (JSON.stringify(cfg) !== JSON.stringify(next)) {
+    setConfig(role.guild.id, next);
+  }
+
   await sendLog(role.guild,"server","🎭 Role Created",[{name:"Role",value:`${role.name} (${role.id})`}]);
 });
 client.on(Events.RoleDelete, async role => {
