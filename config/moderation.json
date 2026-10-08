@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "alertChannelId": null,
+  "spam": { "enabled": true, "maxMessages": 5, "windowSeconds": 7, "timeoutMinutes": 1 },
+  "links": { "enabled": true, "allowLinks": [] },
+  "invites": { "enabled": true },
+  "badWords": { "enabled": true, "words": [] },
+  "mentionSpam": { "enabled": true, "maxMentions": 5, "timeoutMinutes": 5 },
+  "raid": { "enabled": true, "maxJoins": 8, "windowSeconds": 15, "timeoutMinutes": 10 },
+  "caps": { "enabled": true, "minimumLength": 12, "maximumRatio": 0.75 },
+  "duplicate": { "enabled": true, "repeatCount": 3, "windowSeconds": 30, "timeoutMinutes": 2 },
+  "exemptRoleIds": []
+}

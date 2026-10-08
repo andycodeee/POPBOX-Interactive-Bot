@@ -1,0 +1,73 @@
+{
+"roles": {
+"verified": { "name": "Verified", "id": "1556352733248757902" },
+"unverified": { "name": "Unverified", "id": "1556352734645452891" },
+"member": { "name": "Members", "id": "1546697301089712177" },
+"knownRoles": [
+{ "name": "Admin", "id": "1546675278686851082" },
+{ "name": "Founder", "id": "1546697742842208417" },
+{ "name": "Co-Founder", "id": "1551046857671835708" },
+{ "name": "Project Manager", "id": "1551296025204105349" },
+{ "name": "Developer", "id": "1551049136453853194" },
+{ "name": "Admin", "id": "1546696646224515133" },
+{ "name": "Moderator", "id": "1546696863963422831" },
+{ "name": "Temporary-Moderator", "id": "1546696999586234418" },
+{ "name": "Members", "id": "1546697301089712177" },
+{ "name": "-18", "id": "1546616941794426982" },
+{ "name": "+18", "id": "1546616978872078448" },
+{ "name": "Male", "id": "1546661278565670975" },
+{ "name": "Female", "id": "1546661319330111630" },
+{ "name": "Non-binary", "id": "1546661450213498890" },
+{ "name": "Other +", "id": "1546661562817712238" },
+{ "name": "Developer", "id": "1546669131770765403" },
+{ "name": "Content Creator", "id": "1546669171436421262" },
+{ "name": "VoiceMaster", "id": "1546682882335178833" },
+{ "name": "Tickets v2", "id": "1546684428133212213" },
+{ "name": "Bots", "id": "1546697360686448750" },
+{ "name": ".", "id": "1546698422642286592" },
+{ "name": "carl-bot", "id": "1546701755482644570" },
+{ "name": "Tickets Support", "id": "1551236571032977429" },
+{ "name": "Tickets Admin", "id": "1551236572613976177" },
+{ "name": "Server Booster", "id": "1551240159519834302" },
+{ "name": "Emote Handler", "id": "1551264485916938282" },
+{ "name": "POPBOX Helper", "id": "1551298092094197864" },
+{ "name": "Verified", "id": "1556352733248757902" },
+{ "name": "Unverified", "id": "1556352734645452891" }
+]
+},
+"channelPolicy": {
+"defaultVerified": { "view": true, "send": true, "connect": true, "speak": true },
+"defaultUnverified": { "view": false, "send": false, "connect": false, "speak": false },
+"channels": [
+{ "match": "verify", "matchType": "exact", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "lounge", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "rules", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "official-posts", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "Create A Voice Chat", "verified": { "view": true, "connect": true, "speak": true }, "unverified": { "view": false, "connect": false, "speak": false } },
+{ "match": "partnerships", "verified": { "view": true, "send": false }, "unverified": { "view": false, "send": false } },
+{ "match": "media", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "posts", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "cmds", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "socials", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "ideas", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "announcement", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "info", "verified": { "view": true, "send": false }, "unverified": { "view": true, "send": false } },
+{ "match": "levels", "verified": { "view": true, "send": true }, "unverified": { "view": false, "send": false } },
+{ "match": "help", "verified": { "view": true, "send": true }, "unverified": { "view": true, "send": true } },
+{ "match": "boosts", "verified": { "view": true, "send": false }, "unverified": { "view": false, "send": false } },
+{ "match": "ticket", "matchType": "exact", "verified": { "view": true, "send": true }, "unverified": { "view": true, "send": true } },
+{ "match": "moderator-only", "preserve": true },
+{ "match": "ticket-1", "matchType": "exact", "preserve": true },
+{ "match": "ticket-2", "matchType": "exact", "preserve": true },
+{ "match": "transcripts", "preserve": true },
+{ "match": "mod-logs", "preserve": true }
+],
+"preserveChannels": [
+{ "match": "moderator-only", "matchType": "contains" },
+{ "match": "mod-logs", "matchType": "contains" },
+{ "match": "transcripts", "matchType": "contains" },
+{ "match": "Tickets", "matchType": "category" },
+{ "match": "ticket-", "matchType": "prefix" }
+]
+}
+}

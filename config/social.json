@@ -1,0 +1,10 @@
+{
+  "notificationChannelName": "socials",
+  "platforms": {
+    "x": {
+      "enabled": true,
+      "label": "🐦 X",
+      "roleName": "X Notifications"
+    }
+  }
+}
